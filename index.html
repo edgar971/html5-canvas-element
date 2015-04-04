@@ -25,13 +25,31 @@
 <link href="" rel="apple-touch-icon" sizes="152x152" />
 <!-- end shortcut icons  -->
 <style type="text/css" media="screen">
-	
+	.canvas-main {
+		width: 400px;
+		height: 400px;
+		margin: auto;
+		display: block;
+		background: #ebebeb;
+		border: solid 1px gray;
+	}
 </style>
 <script>
-	
+	window.onload = function() {
+		var canvas = document.getElementsByClassName('canvas-main');
+		var context = canvas[0].getContext('2d');
+		context.fillStyle = "rgb(200,0,0)";
+        context.fillRect (10, 10, 55, 50);
+
+        context.fillStyle = "rgba(0, 0, 200, 0.5)";
+        context.fillRect (30, 30, 55, 50);
+        
+         context.fillRect (100, 11, 55, 50);
+	}
 </script>
 </head>
 <!-- body  -->
 	<body>
+		<canvas class="canvas-main"></canvas>
 	</body>
 </html>
