@@ -33,11 +33,15 @@
 	}
 	body {
 		padding: 1em;
+		text-align: center;
+
 	}
 	h2 {
-		text-align: center;
 		margin-bottom: 1em;
 		font-size: 2.5em;
+	}
+	input {
+		margin: 1em 0;
 	}
 	.canvas-main {
 		margin: auto;
@@ -51,31 +55,70 @@
 		//get canvas element
 		var canvas = document.getElementsByClassName('canvas-main');
 		//get 2d space
-		var context = canvas[0].getContext('2d');
+		context = canvas[0].getContext('2d')
 		
-		//get location URL for image
-		var location = window.location.href.replace(/\/+$/, "");
 		
-		loadImage(location + "/image.jpg");
+		//image uploader 
+		imageInput = document.getElementById('user-image');
 		
+		//event listener for image input
+		imageInput.addEventListener('change', processUpload);
+		
+		
+		function processUpload(event) {
+			var file = event.target.files[0];
+			//console.log(file);
+			processImage(file);
+		}
+		
+ 		function processImage(file) {
+	 		//console.log(file);
+	 		
+	 		//basic regex to check if is an image
+	 		var type = /image.*/;
+	 		
+	 		//if is an image
+	 		if(file.type.match(type)) {
+		 		//lets browser read files from system
+		 		var imageReader = new FileReader();
+		 		//when image is loaded then
+		 		imageReader.onloadend = function(event) {
+			 		console.log(event.target);
+			 		var tempImage = new Image();
+			 		loadImage(event.target.result);
+			 		
+		 		}
+		 		imageReader.readAsDataURL(file);
+		 		
+	 		}
+ 		}
 		function loadImage(filePath) {
 			var tempImage = new Image();
 			tempImage.onload = function(ev) {
-				console.log(ev.target.height);
+				clearCanvas();
 				canvas.height = ev.target.height;
 				canvas.width = ev.target.width;
 				context.drawImage(ev.target, 0, 0);
+				
 			}
 			tempImage.src = filePath;
 			return true;
 		}
-		
+		function clearCanvas() {
+			context.clearRect(0, 0, canvas.width, canvas.height);
+
+		}
+		loadImage('/image.jpg');
 	}
 </script>
 </head>
 <!-- body  -->
 	<body>
 		<h2>Image Canvas Reader</h2>
+		<label for="user-image">
+			Upload Image
+			<input type="file" id="user-image">
+		</label>
 		<canvas class="canvas-main" width="600" height="500"></canvas>
 	</body>
 </html>
