@@ -25,9 +25,21 @@
 <link href="" rel="apple-touch-icon" sizes="152x152" />
 <!-- end shortcut icons  -->
 <style type="text/css" media="screen">
+	* {
+		padding: 0;
+		margin: 0;
+		font-family: monospace;
+		
+	}
+	body {
+		padding: 1em;
+	}
+	h2 {
+		text-align: center;
+		margin-bottom: 1em;
+		font-size: 2.5em;
+	}
 	.canvas-main {
-		width: 400px;
-		height: 400px;
 		margin: auto;
 		display: block;
 		background: #ebebeb;
@@ -36,20 +48,34 @@
 </style>
 <script>
 	window.onload = function() {
+		//get canvas element
 		var canvas = document.getElementsByClassName('canvas-main');
+		//get 2d space
 		var context = canvas[0].getContext('2d');
-		context.fillStyle = "rgb(200,0,0)";
-        context.fillRect (10, 10, 55, 50);
-
-        context.fillStyle = "rgba(0, 0, 200, 0.5)";
-        context.fillRect (30, 30, 55, 50);
-        
-         context.fillRect (100, 11, 55, 50);
+		
+		//get location URL for image
+		var location = window.location.href.replace(/\/+$/, "");
+		
+		loadImage(location + "/image.jpg");
+		
+		function loadImage(filePath) {
+			var tempImage = new Image();
+			tempImage.onload = function(ev) {
+				console.log(ev.target.height);
+				canvas.height = ev.target.height;
+				canvas.width = ev.target.width;
+				context.drawImage(ev.target, 0, 0);
+			}
+			tempImage.src = filePath;
+			return true;
+		}
+		
 	}
 </script>
 </head>
 <!-- body  -->
 	<body>
-		<canvas class="canvas-main"></canvas>
+		<h2>Image Canvas Reader</h2>
+		<canvas class="canvas-main" width="600" height="500"></canvas>
 	</body>
 </html>
