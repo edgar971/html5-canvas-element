@@ -171,8 +171,8 @@
 			console.log(image.data[1]);
 			//image data contains an array with the pattern of: [R][G][B][Alpha]
 			//each pixel is grouped by 4 RGBA
-			//for(var i = 0; i < dataSize; i+=4) {
-			for(var a = dataSize / 2; a > 0; a-=4) {
+			for(var i = 0; i < dataSize; i+=4) {
+			//for(var a = dataSize / 2; a > 0; a-=4) {
 /*
 				data[a] = data[a - 5];
 				data[a - 1] = data[a - 6];
@@ -185,7 +185,7 @@
 				data[dataSize - a + 3] = data[a - 2];
 				data[dataSize - a + 4] = data[a - 3];
 */
-			}
+			//}
 				//data[i]     //Red: 0 - 255;
 				//data[i + 1] //Green: 0 - 255;
 				//data[i + 2] //Blue: 0 - 255;
@@ -196,11 +196,11 @@
 				data[i + 1] = data[i + i + 1]; 
 				data[i + 2] = data[i + i + 2]; 
 */
-				//data[i + i + i] = data[i + 1]; 
+				data[i + i] = data[i]; 
 				//data[i + i + i + 1] = data[i + 2]; 
 				//data[i + i + i + 2] = data[i + 2]; 
 				//data[i + 3] = 50; 
-		//	}
+			}
 			image.data = data;
 			SandBox.canvasContext.putImageData(image, 0,0);
 			data = null;
